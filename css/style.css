@@ -679,18 +679,54 @@ img { display: block; max-width: 100%; height: auto; }
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  transition: border-color var(--transition);
+  transition: border-color var(--transition), transform var(--transition);
 }
 .topic:hover { border-color: var(--color-line-strong); }
+
+/* Hervorgehobene Karte (Fachgebiet 1) spannt zwei Spalten, damit das
+   3+2-Gitter ohne leere Fläche aufgeht. Gleichzeitig bekommt sie innen
+   ein horizontales Layout (Icon/Tag links, Titel + Text rechts). */
 .topic--highlight {
   background: var(--color-ink);
   border-color: var(--color-ink);
   color: rgba(255, 255, 255, 0.88);
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: minmax(110px, auto) 1fr;
+  grid-template-rows: auto auto;
+  gap: 0.25rem var(--space-3);
+  align-items: start;
+  padding: var(--space-4);
+}
+.topic--highlight .topic__icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  width: 52px; height: 52px;
+  align-self: center;
+}
+.topic--highlight .topic__tag {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 0;
+}
+.topic--highlight .topic__name {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 1.2rem;
+  font-size: 1.35rem;
+}
+.topic--highlight .topic__desc {
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 1rem;
+  line-height: 1.55;
+  max-width: 52ch;
 }
 .topic--highlight .topic__name,
 .topic--highlight .topic__desc { color: #fff; }
 .topic--highlight .topic__icon { color: #fff; }
 .topic--highlight .topic__tag { color: rgba(255, 255, 255, 0.7); }
+
 .topic__icon {
   width: 28px; height: 28px;
   color: var(--color-ink);
@@ -717,11 +753,36 @@ img { display: block; max-width: 100%; height: auto; }
   margin: 0;
   line-height: 1.45;
 }
+
 @media (max-width: 900px) {
   .topics { grid-template-columns: repeat(2, 1fr); }
+  /* Auf Tablet: Hervorgehobene Karte volle Breite, dann 2×2 darunter. */
+  .topic--highlight {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(90px, auto) 1fr;
+  }
 }
 @media (max-width: 520px) {
   .topics { grid-template-columns: 1fr; }
+  /* Auf Mobil: Hervorgehobene Karte wieder einspaltig, Inhalt untereinander. */
+  .topic--highlight {
+    grid-column: auto;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-3);
+  }
+  .topic--highlight .topic__icon {
+    width: 36px; height: 36px;
+    align-self: flex-start;
+  }
+  .topic--highlight .topic__name {
+    margin-top: 0;
+    font-size: 1.15rem;
+  }
+  .topic--highlight .topic__desc {
+    font-size: var(--fs-small);
+    line-height: 1.45;
+  }
 }
 
 /* =========================================================
