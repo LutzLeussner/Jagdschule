@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editoren
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs / temp
+*.log
+tmp/
+.cache/
+
+# Node (falls später Build-Tools dazu kommen)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env / Secrets
+.env
+.env.*
+*.pem
+*.key
+
+# Lokale Screenshot-Ordner (nicht ins Repo)
+screenshots-iteration-2/
+screenshots-iteration-2-2/
